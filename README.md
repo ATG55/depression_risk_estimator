@@ -14,7 +14,7 @@ A small educational machine learning project that estimates a person's **relativ
 3. Computes out-of-fold predictions with 5-fold stratified cross-validation, so a new user's score can be compared against honest (unseen-data) predictions.
 4. Asks the user 9 questions in the terminal and reports where their estimated risk falls relative to people in the training data.
 
-Because the model's predictive power is limited, the result is shown as a **relative ranking** (percentile) rather than a confident probability.
+The result shows both an estimated probability and a relative ranking (percentile) compared to the training data. Because the model is weak, treat both with caution.
 
 ## Features used
 
@@ -30,22 +30,23 @@ Because the model's predictive power is limited, the result is shown as a **rela
 | `fs_enoughtom` | Enough food for tomorrow (0/1) | Do you have enough food for tomorrow? |
 | `fs_sleephun` | Went to sleep hungry (0/1) | Have you gone to sleep hungry recently? |
 
+
 The target column is `depressed` (0/1). Column meanings are inferred from their names; please check the dataset's data dictionary for exact definitions and units.
 
 ## Installation
 
 ```bash
 git clone https://github.com/ATG55/depression_risk_estimator.git
-cd depression_risk_estimator.git
+cd depression_risk_estimator
 pip install -r requirements.txt
 ```
 
 ## Usage
 
-Place `main.csv` in the same folder as the script, then run:
+Place `train.csv` in the same folder as the script, then run:
 
 ```bash
-python depresyon_risk.py
+python main.py
 ```
 
 Example session:
@@ -62,6 +63,8 @@ Value of your durable assets (0 = none): 100
 How many times did you eat meat in the past week? 2
 Do you have enough food for tomorrow? (y/n): n
 Have you gone to sleep hungry recently? (y/n): y
+Estimated probability: 14.5%
+Higher than 40% of people in the training data
 ```
 
 Inputs are validated (ranges are taken from the training data), and invalid entries are asked again.
@@ -94,8 +97,8 @@ An AUC of 0.5 is random guessing, so the signal in this data is weak. About 17% 
 
 ## Data
 
-The dataset is not included in this repository. Add your own `train.csv` and make sure you are allowed to share it before publishing it.
+The data comes from a household survey about finances, food security and mental health (columns include assets, consumption, and mobile money usage). The target column is `depressed` (0/1).
 
-## License
+**Source:** [b_depression on Kaggle](https://www.kaggle.com/datasets/francispython/b-depression)
 
-Add a license of your choice (for example MIT) before publishing.
+The dataset is not included in this repository. Download `train.csv` from the link above and place it in the project folder. Only 9 of its 75 columns are used by the model.
